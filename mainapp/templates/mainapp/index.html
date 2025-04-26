@@ -1,0 +1,33 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+
+{% block main %}
+
+<section class="page_logo">
+    <img src="{% static 'mainapp/img/mopAi.png' %}" alt="mopAi_logo">
+    
+    <h2 class="page_title"></h2>
+</section>
+
+
+<section class="page_apps">
+    <img class="page__logo" src="{% static 'mainapp/img/main_title.png' %}" alt="GUCRPS">
+    <div class="page__content">
+        <section class="services">
+            {% for app in apps %}
+                <a href="{{ app.link }}" class="service-card btn" target="_blank">
+                    <img src="{{ app.image.url }}" alt="{{ app.name }}" class="service-card__image">
+                    <h2 class="service-card__title">{{ app.name|safe }}</h2>
+                    <p class="service-card__description">{{ app.description|safe }}</p>
+                </a>
+            {% endfor %}
+        </section>
+    </div>
+    <img class="page__logo" src="{% static 'mainapp/img/GUCRPS.png' %}" alt="GUCRPS">
+</section>
+
+
+
+{% endblock main %}

@@ -1,0 +1,17 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+*.tar
+*.zip
+*.gz
+
+Dockerfile*
+!Dockerfile
+
+*.log
+
+.vscode/
+.idea/

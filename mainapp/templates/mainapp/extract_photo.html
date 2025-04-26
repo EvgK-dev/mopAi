@@ -1,0 +1,73 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+
+
+{% block main %}
+
+
+<section class="page_apps__audio">
+    <img class="page__logo" src="{% static 'mainapp/img/main_title.png' %}" alt="GUCRPS">
+    <div class="page__content">
+        
+        <div class="app-form-container">
+            <h2 class="app-form-title">* Извлечение текста из изображения</h2>
+
+
+            {% if not upload_status %}
+
+            <form action="{% url 'extract_photo' %}" method="post" enctype="multipart/form-data" id="uploadForm">
+                {% csrf_token %}
+                <div class="app-form-group">
+                    <label for="file-upload" class="app-form-label">Выберите файл:</label>
+                    <label for="file-upload" class="app-file-upload">Загрузить файл</label>
+                    <input type="file" id="file-upload" name="file" class="app-file-input" accept="image/*">
+                    <div id="file-name" class="app-file-name">Файл не выбран</div>
+                </div>
+            
+                <div class="app-form-group">
+                    <button type="submit" class="app-submit-button">Отправить</button>
+                </div>
+            </form>
+
+            {% endif %}
+
+
+
+            <section class="app_status__container none">
+                <div class="app_status">
+                    <div class="app_status__item">
+                        <p class="app_status__title">Статус загрузки:</p>
+                        <p class="app_status__value app_status_upload"></p>
+                    </div>
+            
+                    <div class="app_status__item app_status__item_file none">
+                        <p class="app_status__title">Статус обработки:</p>
+                        <p class="app_status__value app_status_process"></p>
+                    </div>
+                </div>
+            
+                <div class="app_status__result none">
+                    {{ transcribed_text }}
+                </div>
+            
+                <div class="app_buttons none">
+                    <button class="app_buttons__item app_buttons__copy">Копировать</button>
+                    <button class="app_buttons__item app_buttons__download">Скачать</button>
+                    <button class="app_buttons__item app_buttons__reset">Очистить</button>
+                </div>
+
+            </section>
+
+            
+
+
+        </div>
+
+    </div>
+    <img class="page__logo" src="{% static 'mainapp/img/GUCRPS.png' %}" alt="gucrps">
+
+</section>
+
+
+{% endblock main %}

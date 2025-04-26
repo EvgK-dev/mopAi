@@ -1,0 +1,80 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: mopAi-web
+    build: .
+    restart: always
+    networks:
+      - mopAi
+    ports:
+      - "8013:8013"
+    volumes:
+      - mopAi_data:/app/data
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - redis
+      - celery
+      - db
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia  
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    networks:
+      - mopAi
+    command: redis-server --maxmemory 2GB --timeout 600 --maxmemory-policy volatile-lru
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    networks:
+      - mopAi
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: mopAi_db
+      POSTGRES_USER: mopAi_user
+      POSTGRES_PASSWORD: mopAi_pass
+    ports:
+      - "5432:5432"
+
+  celery:
+    image: mopAi-web
+    container_name: celery
+    restart: always
+    networks:
+      - mopAi
+    command: celery -A mopAi worker --loglevel=info --concurrency=6
+    depends_on:
+      - redis
+      - db
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia  
+
+  flower:
+    image: mopAi-web
+    container_name: flower
+    command: celery -A mopAi flower --port=5555
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - db
+    networks:
+      - mopAi
+
+networks:
+  mopAi:
+    driver: bridge
+
+volumes:
+  mopAi_data:
+  pgdata:

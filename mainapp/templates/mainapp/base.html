@@ -1,0 +1,47 @@
+{% load static %}  
+
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>mopAi - Универсальное решение для обработки данных</title>
+		<link rel="icon" href="{% static 'mainapp/img/main_img.png' %}" type="image/png">
+
+		<link type="text/css" href="{% static 'mainapp/css/null.css' %}" rel="stylesheet" /> 
+		<link type="text/css" href="{% static 'mainapp/css/base.css' %}" rel="stylesheet" /> 
+		<link type="text/css" href="{% static 'mainapp/css/main.css' %}" rel="stylesheet" /> 
+	
+		<script src="{% static 'mainapp/js/main.js' %}"></script>   
+
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+	</head>
+	<body>
+		<div class="wrapper">
+			{% block header %}
+			<header class="header">
+				<h1>mopAi - Универсальное решение для обработки данных </h1>
+			</header>
+
+
+			{% endblock header %}
+
+			<main class="main">
+			{% block main %}
+		
+			{% endblock main %}
+			</main>
+			{% block footer %}
+			<footer class="footer">
+
+				<h3>Информационный продукт разработан специалистами <b>mopAi</b></h3>
+				<h3>Контактный телефон <b>+375 17 000 <span>00 00</span></b></h3>
+				<h3>© 2025 mopAi. Все права защищены. </h3>
+			</footer>
+			{% endblock footer %}
+
+		</div>	
+	</body>
+</html>
